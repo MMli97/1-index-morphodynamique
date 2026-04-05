@@ -1,0 +1,259 @@
+
+████████████████████████████████████████████████████████████████████████████████████████████████████
+  SUITE DE VALIDATION V2.2 — 6 TESTS
+  Classifieur: 7 formes, 5 axes, espace [0,1]⁵
+████████████████████████████████████████████████████████████████████████████████████████████████████
+
+====================================================================================================
+  TEST 1 — CONSISTANCE LOGIQUE INTERNE
+====================================================================================================
+
+  1a. Analyse statique des bornes par forme
+  --------------------------------------------------------------------------------
+  ✓ PASS  F01 (Équilibre différentiel)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F03 (Sur-couplage)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F04 (Plateau inertiel)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F05 (Dominance normative)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F06 (Inversion normative)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F08 (Dissolution fonctionnelle)  —  Point admissible trouvé (d=0)
+  ✓ PASS  F09 (Architecture pure)  —  Point admissible trouvé (d=0)
+
+  1b. Vérification d'orientation des contraintes
+  --------------------------------------------------------------------------------
+
+  1c. Détection de redondances (corrélation de violations)
+  --------------------------------------------------------------------------------
+
+  Bilan Test 1: PASS
+
+====================================================================================================
+  TEST 2 — RECOUVREMENTS ET AMBIGUÏTÉS STRUCTURELLES
+====================================================================================================
+
+  2a. Distribution des marges (N=100000)
+  --------------------------------------------------------------------------------
+    P(marge < 0.005) =   19.78%  (19777 points)
+    P(marge < 0.010) =   20.93%  (20925 points)
+    P(marge < 0.020) =   23.22%  (23222 points)
+    P(marge < 0.050) =   32.34%  (32342 points)
+    P(marge < 0.100) =   43.72%  (43724 points)
+  ✗ FAIL  P(m < 0.02) ≤ 5%  —  observé: 23.22%
+  ✗ FAIL  P(m < 0.01) ≤ 2%  —  observé: 20.93%
+
+    Quantiles des marges:
+      Q05 = 0.0000
+      Q10 = 0.0000
+      Q25 = 0.0276
+      Q50 = 0.1355
+      Q75 = 0.3597
+      Q90 = 0.6861
+      Q95 = 0.9690
+
+  2b. Recouvrements (points inside ≥2 formes)
+  --------------------------------------------------------------------------------
+    Points dans ≥2 formes: 18544 (18.54%)
+
+    Paires de chevauchement:
+      F01 ∩ F06: 13539 points (13.54%)
+      F04 ∩ F05: 2175 points (2.17%)
+      F01 ∩ F04: 1294 points (1.29%)
+      F05 ∩ F08: 1223 points (1.22%)
+      F04 ∩ F09: 208 points (0.21%)
+      F04 ∩ F06: 114 points (0.11%)
+      F03 ∩ F05: 89 points (0.09%)
+      F03 ∩ F09: 24 points (0.02%)
+      F03 ∩ F08: 21 points (0.02%)
+      F03 ∩ F04: 13 points (0.01%)
+      F04 ∩ F08: 6 points (0.01%)
+
+    Combinaisons de formes simultanées:
+      F01 ∩ F06: 13470 (13.47%)
+      F04 ∩ F05: 2168 (2.17%)
+      F01 ∩ F04: 1225 (1.23%)
+      F05 ∩ F08: 1214 (1.21%)
+      F04 ∩ F09: 206 (0.21%)
+      F03 ∩ F05: 85 (0.08%)
+      F01 ∩ F04 ∩ F06: 69 (0.07%)
+      F04 ∩ F06: 45 (0.04%)
+      F03 ∩ F09: 22 (0.02%)
+      F03 ∩ F08: 18 (0.02%)
+
+  Bilan Test 2: FAIL (critères de marge non satisfaits)
+
+====================================================================================================
+  TEST 3 — COUVERTURE DU CUBE (zones mortes + aspirateur)
+====================================================================================================
+
+  3a. Zones mortes (d_min élevé)
+  --------------------------------------------------------------------------------
+    P(d_min > 0.05) =   31.36%  (31357 points)
+    P(d_min > 0.10) =   24.01%  (24008 points)
+    P(d_min > 0.15) =   17.56%  (17564 points)
+    P(d_min > 0.20) =   12.32%  (12323 points)
+    P(d_min > 0.30) =    5.46%  (5460 points)
+    P(d_min > 0.50) =    0.27%  (267 points)
+  ✗ FAIL  P(d_min > 0.15) ≤ 1%  —  observé: 17.56%
+  ✗ FAIL  P(d_min > 0.10) ≤ 5%  —  observé: 24.01%
+
+    Quantiles de d_min:
+      Q50 = 0.0000
+      Q75 = 0.0927
+      Q90 = 0.2268
+      Q95 = 0.3101
+      Q99 = 0.4406
+
+  3b. Distribution des victoires par forme
+  --------------------------------------------------------------------------------
+    F01:  41821 ( 41.82%)  marge médiane=0.0500
+    F03:  23842 ( 23.84%)  marge médiane=0.4935
+    F05:  17280 ( 17.28%)  marge médiane=0.2421
+    F06:   9533 (  9.53%)  marge médiane=0.1003
+    F04:   5794 (  5.79%)  marge médiane=0.0258
+    F08:   1398 (  1.40%)  marge médiane=0.0951
+    F09:    332 (  0.33%)  marge médiane=0.0989
+  ✓ PASS  Pas d'aspirateur (>60% + marge médiane >0.05)
+
+    Points inside (d=0): 60061 (60.06%)
+
+  Bilan Test 3: FAIL
+
+====================================================================================================
+  TEST 4 — STABILITÉ LOCALE SOUS BRUIT
+====================================================================================================
+
+  σ = 0.02
+  --------------------------------------------------------------------------------
+  ✓ PASS  Points confiants (m≥0.05): flip-rate ≤ 2.00%  —  observé: 0.63% (n=3455)
+    Points frontière (m<0.02): flip-rate = 7.12% (n=1136)
+  ✓ PASS  Points frontière: ≥80% oscillent entre ≤2 formes  —  observé: 98.24%
+
+    Distribution du nombre de formes distinctes aux frontières:
+      1 formes: 889 points (78.26%)
+      2 formes: 227 points (19.98%)
+      3 formes: 20 points (1.76%)
+
+  σ = 0.05
+  --------------------------------------------------------------------------------
+  ✓ PASS  Points confiants (m≥0.05): flip-rate ≤ 8.00%  —  observé: 4.10% (n=3412)
+    Points frontière (m<0.02): flip-rate = 11.52% (n=1142)
+  ✓ PASS  Points frontière: ≥80% oscillent entre ≤2 formes  —  observé: 94.48%
+
+    Distribution du nombre de formes distinctes aux frontières:
+      1 formes: 785 points (68.74%)
+      2 formes: 294 points (25.74%)
+      3 formes: 62 points (5.43%)
+      4 formes: 1 points (0.09%)
+
+  Bilan Test 4: voir détails ci-dessus
+
+====================================================================================================
+  TEST 5 — INVARIANCE SOUS MÉTAMORPHISMES (T1, T2, T3)
+====================================================================================================
+
+  T1 (A2+=t, A3+=t) → Δ₂₃ invariant
+  --------------------------------------------------------------------------------
+  ✓ PASS  Taux de préservation ≥ 95%  —  observé: 96.81% (35285/36446)
+
+    Flips observés:
+      F05 → F04: 205
+      F08 → F01: 166
+      F01 → F08: 158
+      F04 → F01: 122
+      F01 → F04: 112
+      F04 → F05: 77
+      F03 → F08: 61
+      F08 → F03: 39
+      F09 → F04: 29
+      F01 → F06: 21
+
+  T2 (A4+=t, A5+=t) → Δ₄₅ invariant
+  --------------------------------------------------------------------------------
+  ✗ FAIL  Taux de préservation ≥ 95%  —  observé: 93.47% (33869/36234)
+
+    Flips observés:
+      F06 → F01: 603
+      F04 → F01: 352
+      F01 → F04: 199
+      F01 → F06: 152
+      F03 → F01: 118
+      F01 → F03: 105
+      F05 → F04: 97
+      F01 → F09: 89
+      F08 → F01: 76
+      F09 → F01: 68
+
+  T3 (A1+=t, A2+=t) → Δ₁₂ invariant
+  --------------------------------------------------------------------------------
+  ✗ FAIL  Taux de préservation ≥ 95%  —  observé: 93.18% (33713/36180)
+
+    Flips observés:
+      F03 → F01: 870
+      F01 → F03: 703
+      F03 → F06: 298
+      F06 → F03: 185
+      F08 → F03: 52
+      F05 → F04: 50
+      F01 → F04: 44
+      F03 → F08: 37
+      F05 → F03: 30
+      F01 → F09: 29
+
+  Bilan Test 5: FAIL
+
+====================================================================================================
+  TEST 6 — NON-RÉGRESSION SUR LES 15 SYSTÈMES
+====================================================================================================
+
+  6a. Classifications et marges
+  --------------------------------------------------------------------------------
+  Système                      | Best  Exp   Match |      d      m | 2nd   | Inside
+  -----------------------------------------------------------------------------------------------
+  01 Cellule eucaryote         | F01   F01   ✓     |  0.000  0.100 | F04   | ★
+  02 Thermostat                | F05   F05   ✓     |  0.000  0.650 | F01   | ★
+  03 Marché NYSE               | F03   F03   ✓     |  0.000  0.125 | F01   | ★
+  04 Immunité adaptative       | F01   F01   ✓     |  0.000  0.125 | F06   | ★
+  05 Église                    | F04   F04   ✓     |  0.000  0.000 | F05   | ★
+  06 Ve République             | F01   F01   ✓     |  0.000  0.525 | F03   | ★
+  07 Organisme multicel        | F04   F04   ✓     |  0.000  0.000 | F05   | ★
+  08 Régime autoritaire        | F05   F05   ✓     |  0.000  0.200 | F04   | ★
+  09 Supply chain              | F03   F03   ✓     |  0.000  0.375 | F01   | ★
+  10 Apple                     | F01   F01   ✓     |  0.000  0.375 | F06   | ★
+  11 TikTok                    | F01   F01   ✓     |  0.000  0.200 | F06   | ★
+  12 LLM statique              | F04   F04   ✓     |  0.000  0.000 | F09   | ★
+  13 Linux                     | F01   F01   ✓     |  0.000  0.000 | F06   | ★
+  14 Ordre réformé             | F04   F04   ✓     |  0.000  0.000 | F05   | ★
+  15 Physique théorique        | F01   F01   ✓     |  0.000  0.000 | F06   | ★
+
+  6b. Résumé
+  --------------------------------------------------------------------------------
+  ✓ PASS  Match attendu  —  15/15
+  ✓ PASS  Inside (d=0)  —  15/15
+  ✗ FAIL  Marge ≥ 0.02  —  9/15
+  ✓ PASS  Pas de classification absurde  —  0 absurdes
+
+  6c. Cas spécial LLM statique
+  --------------------------------------------------------------------------------
+    Best: F04 (d=0.0000), Second: F09 (margin=0.0000)
+    Profil complet:
+      F04   d=0.0000 ★
+      F09   d=0.0000 ★
+      F01   d=0.3500
+      F06   d=0.7500
+      F03   d=1.0500
+      F05   d=1.4750
+      F08   d=2.9000
+
+  Bilan Test 6: FAIL
+
+████████████████████████████████████████████████████████████████████████████████████████████████████
+  SYNTHÈSE FINALE
+████████████████████████████████████████████████████████████████████████████████████████████████████
+  ✓ PASS  T1: Consistance logique
+  ✗ FAIL  T2: Recouvrements / ambiguïtés
+  ✗ FAIL  T3: Couverture du cube
+  ✓ PASS  T4: Stabilité sous bruit
+  ✗ FAIL  T5: Invariance métamorphismes
+  ✗ FAIL  T6: Non-régression 15 cas
+
+  Score global: 2/6
+████████████████████████████████████████████████████████████████████████████████████████████████████
